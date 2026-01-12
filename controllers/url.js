@@ -1,20 +1,23 @@
 const { customAlphabet  } = require("nanoid");
 const URL = require("../models/url.js");
-
 async function handleCreateUrl(req,res){
     let body =req.body;
-    if(!body){
+    if(!body.url){
         return res.status(404).json({error:"url is needed"});
     }
     const nanoid = customAlphabet('1234567890abcdef', 8);
     const shortId = nanoid()
     await URL.create({
         shortId : shortId,
-        redirectUrl : body.redirectUrl,
+        redirectUrl : body.url,
         visitHistory:[]
     })
+    const allUrls = await URL.find({});
+    return res.render("home",{
+        urls: allUrls
+    });
 
-    return res.status(201).json({message:"Sucessfully created"});
+    // return res.status(201).json({message:"Sucessfully created"});
 }
 
 async function handleGetShortUrl(req,res){

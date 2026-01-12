@@ -14,7 +14,7 @@ const urlSchema = new mongoose.Schema({
         timestamp:{ type : Number }
     }],
 },
-{timestamp:true});
+{timestamps:true});
 
 const URL = mongoose.model("URL",urlSchema);
 
