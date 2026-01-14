@@ -10,7 +10,8 @@ async function handleCreateUrl(req,res){
     await URL.create({
         shortId : shortId,
         redirectUrl : body.url,
-        visitHistory:[]
+        visitHistory:[],
+        createdBy: req.user._id,  //This user is taken from the middleware restrictToLoggedinUserOnly
     })
     const allUrls = await URL.find({});
     return res.render("home",{
