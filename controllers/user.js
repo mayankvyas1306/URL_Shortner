@@ -26,11 +26,9 @@ async function handleUserLogin(req,res){
         });
     }
 
-    const sessionUid = uuidv4()
+    const token = setUser(user);
 
-    setUser(sessionUid,user);
-
-    res.cookie("uid",sessionUid);
+    res.cookie("uid",token);
 
 
 
