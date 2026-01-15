@@ -28,7 +28,10 @@ async function handleUserLogin(req,res){
 
     const token = setUser(user);
 
+    //we are not using cookie instead lets try bearer authentication
     res.cookie("uid",token);
+
+    // return res.json({token});
 
 
 
