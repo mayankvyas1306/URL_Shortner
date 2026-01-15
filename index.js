@@ -2,7 +2,7 @@ const express = require("express");
 const { connectToMongoDB } = require("./db.js");
 const path = require("path");
 const cookieParser = require('cookie-parser')
-const { restrictToLoggedinUserOnly , checkAuth} = require("./middleware/auth.js")
+const { checkForAuthentication,restrictTo} = require("./middleware/auth.js")
 connectToMongoDB("mongodb://localhost:27017/short-url");
 
 const urlRouter = require("./routes/url.js");
@@ -20,10 +20,11 @@ app.use(express.urlencoded({
     extended:false
 }))
 app.use(cookieParser());
+app.use(checkForAuthentication);
 
-app.use('/url',restrictToLoggedinUserOnly,urlRouter);
+app.use('/url',restrictTo(["ADMIN","NORMAL"]),urlRouter);
 app.use('/user',userRouter);
-app.use('/',checkAuth,staticRouter);
+app.use('/',staticRouter);
 
 
 app.listen(8001,()=>{

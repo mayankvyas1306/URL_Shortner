@@ -3,10 +3,12 @@ const jwt = require("jsonwebtoken");
 const secretKey = "maybyudgcbugucyvv&^(*%*bdshb80dsgc76735uihdyu^^^*";
 
 function setUser(user){
+    //creating token
     return jwt.sign(
         {
             _id: user._id,
-            email: user.email
+            email: user.email,
+            role: user.role
         },
         secretKey
     );
